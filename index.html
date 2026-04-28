@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fayha Fresh | Fresh Juice Oman</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+    body {
+      background: #fffaf5;
+      color: #222;
+    }
+
+    /* Notification */
+    .notification {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #27ae60;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 10px;
+      z-index: 2000;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    /* Modal for Product Details */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      z-index: 3000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 25px;
+      padding: 30px;
+      max-width: 450px;
+      width: 90%;
+      text-align: center;
+      position: relative;
+      animation: modalSlide 0.3s ease;
+    }
+
+    @keyframes modalSlide {
+      from {
+        transform: translateY(-50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 28px;
+      cursor: pointer;
+      color: #999;
+    }
+
+    .close-modal:hover {
+      color: #e74c3c;
+    }
+
+    /* Checkout Modal */
+    .checkout-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      z-index: 3000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .checkout-modal.show {
+      display: flex;
+    }
+
+    .checkout-content {
+      background: white;
+      border-radius: 25px;
+      padding: 30px;
+      max-width: 450px;
+      width: 90%;
+      position: relative;
+    }
+
+    .checkout-content h3 {
+      color: #5b3b75;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .checkout-content input {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    .checkout-content input:focus {
+      border-color: #e8752c;
+    }
+
+    .payment-options {
+      margin: 15px 0 20px 0;
+    }
+
+    .payment-options label {
+      display: block;
+      margin: 10px 0;
+      cursor: pointer;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      transition: 0.3s;
+    }
+
+    .payment-options label:hover {
+      border-color: #e8752c;
+      background: #fff7ef;
+    }
+
+    .payment-options input {
+      width: auto;
+      margin-right: 10px;
+    }
+
+    .top-bar {
+      background: #5b3b75;
+      color: white;
+      padding: 12px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+    }
+
+    header {
+      background: white;
+      padding: 18px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+    }
+
+    .logo-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-img {
+      width: 95px;
+    }
+
+    nav a {
+      margin-left: 25px;
+      text-decoration: none;
+      color: #222;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #e8752c;
+    }
+
+    .cart-btn {
+      background: #e8752c;
+      color: white;
+      padding: 8px 18px;
+      border-radius: 30px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .cart-btn:hover {
+      background: #5b3b75;
+      color: white;
+    }
+
+    .hero {
+      min-height: 650px;
+      padding: 70px 8%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 40px;
+      background: linear-gradient(135deg, #fff7ef, #ffffff);
+    }
+
+    .hero-text h1 {
+      font-size: 48px;
+      line-height: 1.2;
+      color: #111;
+      margin-bottom: 18px;
+    }
+
+    .hero-text h1 span {
+      color: #e8752c;
+    }
+
+    .hero-text h2 {
+      font-size: 24px;
+      color: #5b3b75;
+      margin-bottom: 20px;
+    }
+
+    .hero-text p {
+      color: #777;
+      font-size: 18px;
+      line-height: 1.8;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      background: #e8752c;
+      color: white;
+      border: none;
+      padding: 14px 30px;
+      border-radius: 30px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #5b3b75;
+      transform: translateY(-3px);
+    }
+
+    .hero-image {
+      text-align: center;
+    }
+
+    .hero-image img {
+      width: 100%;
+      max-width: 480px;
+      filter: drop-shadow(0 20px 25px rgba(0,0,0,0.18));
+    }
+
+    .about {
+      padding: 80px 8%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 45px;
+      align-items: center;
+      background: #fffaf5;
+    }
+
+    .about-img img {
+      width: 100%;
+      border-radius: 28px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+    }
+
+    .small-title {
+      color: #e8752c;
+      font-weight: 800;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+
+    .about-text h2 {
+      font-size: 36px;
+      line-height: 1.4;
+      margin-bottom: 20px;
+    }
+
+    .about-text p {
+      color: #666;
+      line-height: 1.9;
+      font-size: 17px;
+      margin-bottom: 20px;
+    }
+
+    .badges {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+
+    .badges span {
+      background: #5b3b75;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 25px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .products {
+      padding: 80px 8%;
+      text-align: center;
+      background: white;
+    }
+
+    .products h2 {
+      font-size: 40px;
+      margin-bottom: 40px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 28px;
+    }
+
+    .card {
+      background: #e8e8e8;
+      border: 1.5px solid #d0d0d0;
+      border-radius: 24px;
+      padding: 28px 20px;
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+      border-color: #e8752c;
+      background: #eeeeee;
+    }
+
+    .product-img {
+      width: 130px;
+      height: 210px;
+      object-fit: contain;
+      margin-bottom: 15px;
+      transition: 0.3s;
+    }
+
+    .card:hover .product-img {
+      transform: scale(1.08) rotate(-3deg);
+    }
+
+    .card h3 {
+      color: #111;
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      color: #777;
+      margin-bottom: 8px;
+    }
+
+    .price {
+      color: #e8752c !important;
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .card button {
+      margin: 5px;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 25px;
+      background: #e8752c;
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .card button:hover {
+      background: #5b3b75;
+    }
+
+    .details-btn {
+      background: #5b3b75 !important;
+    }
+
+    .details-btn:hover {
+      background: #3d2a4f !important;
+    }
+
+    /* Cart Section */
+    .cart-section {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      z-index: 2000;
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .cart-section.show {
+      display: flex;
+    }
+
+    .cart-container {
+      max-width: 800px;
+      width: 90%;
+      max-height: 85vh;
+      overflow-y: auto;
+      background: white;
+      border-radius: 28px;
+      padding: 30px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+      position: relative;
+      animation: modalSlide 0.3s ease;
+    }
+
+    .cart-container h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #5b3b75;
+    }
+
+    .close-cart {
+      position: absolute;
+      top: 15px;
+      right: 25px;
+      font-size: 28px;
+      cursor: pointer;
+      color: #999;
+      transition: 0.3s;
+    }
+
+    .close-cart:hover {
+      color: #e74c3c;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f8f8f8;
+      padding: 15px;
+      margin-bottom: 12px;
+      border-radius: 16px;
+      flex-wrap: wrap;
+    }
+
+    .cart-item-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .cart-item-img {
+      width: 50px;
+      height: 50px;
+      object-fit: contain;
+    }
+
+    .cart-item-actions button {
+      background: #e8752c;
+      color: white;
+      border: none;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      cursor: pointer;
+      margin: 0 5px;
+    }
+
+    .cart-item-actions button:hover {
+      background: #5b3b75;
+    }
+
+    .remove-btn {
+      background: #e74c3c !important;
+    }
+
+    .cart-summary {
+      margin-top: 25px;
+      padding-top: 20px;
+      border-top: 2px solid #ddd;
+      text-align: center;
+    }
+
+    .cart-summary p {
+      font-size: 20px;
+      margin: 10px 0;
+    }
+
+    .story {
+      padding: 80px 8%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+      background: #fff7ef;
+    }
+
+    .story h2 {
+      font-size: 36px;
+      margin-bottom: 18px;
+    }
+
+    .story p {
+      color: #666;
+      line-height: 1.9;
+      font-size: 17px;
+    }
+
+    .story img {
+      width: 100%;
+      max-width: 430px;
+      margin: auto;
+      display: block;
+    }
+
+    .benefits {
+      padding: 70px 8%;
+      text-align: center;
+      background: white;
+    }
+
+    .benefits h2 {
+      font-size: 35px;
+      margin-bottom: 35px;
+    }
+
+    .benefit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 22px;
+    }
+
+    .benefit {
+      background: #fff7ef;
+      padding: 30px;
+      border-radius: 22px;
+      font-size: 35px;
+      transition: 0.3s;
+    }
+
+    .benefit:hover {
+      transform: translateY(-8px);
+      background: #fdf0e5;
+    }
+
+    .benefit h3 {
+      font-size: 16px;
+      margin-top: 14px;
+    }
+
+    .contact {
+      padding: 70px 8%;
+      background: #f7f2ef;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 35px;
+    }
+
+    .contact-box {
+      background: white;
+      padding: 35px;
+      border-radius: 24px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    }
+
+    .contact-box h2 {
+      margin-bottom: 18px;
+      color: #5b3b75;
+    }
+
+    .contact-box p {
+      margin: 12px 0;
+      color: #555;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 14px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      outline: none;
+      font-size: 16px;
+    }
+
+    input:focus, textarea:focus {
+      border-color: #e8752c;
+    }
+
+    .form-message {
+      margin-top: 15px;
+      padding: 10px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .form-message.success {
+      background: #27ae60;
+      color: white;
+    }
+
+    .form-message.error {
+      background: #e74c3c;
+      color: white;
+    }
+
+    footer {
+      background: #5b3b75;
+      color: white;
+      text-align: center;
+      padding: 28px;
+    }
+
+    @media (max-width: 850px) {
+      header {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      nav a {
+        margin: 8px;
+        display: inline-block;
+      }
+
+      .hero, .about, .story, .contact {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .hero-text h1 {
+        font-size: 34px;
+      }
+
+      .top-bar {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .cart-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="top-bar">
+    <div>🍹 Fayha Fresh - Oman's Fresh Juice</div>
+    <div>📞 +968 99253017</div>
+  </div>
+
+  <header>
+    <div class="logo-box">
+      <img src="imge/logo.png" class="logo-img" alt="Logo" onerror="this.style.display='none'">
+    </div>
+    <nav>
+      <a href="#home">HOME</a>
+      <a href="#about">ABOUT US</a>
+      <a href="#products">PRODUCTS</a>
+      <a href="#story">STORY</a>
+      <a href="#contact">CONTACT US</a>
+      <a href="#" onclick="toggleCart(); return false;" class="cart-btn">🛒 CART (<span id="cartCount">0</span>)</a>
+    </nav>
+  </header>
+
+  <section class="hero" id="home">
+    <div class="hero-text">
+      <h1>Fresh Juice in Oman: <span>Fayha Fresh</span></h1>
+      <h2>A Sip of Wellness for the Health-Conscious Soul</h2>
+      <p>Enjoy natural, refreshing, and healthy juices made with premium fruits. Crafted with freshness, quality, and care.</p>
+      <button class="btn" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">View Products</button>
+    </div>
+    <div class="hero-image">
+      <img src="imge/homepage.png" alt="Fresh Juice" onerror="this.src='https://placehold.co/400x400?text=Fresh+Juice'">
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="about-img">
+      <img src="imge/homepage.png" alt="About Juice" onerror="this.src='https://placehold.co/400x400?text=Fayha+Fresh'">
+    </div>
+    <div class="about-text">
+      <p class="small-title">WHO WE ARE</p>
+      <h2>Meet the Experts Behind Oman's Fresh Juice Brand</h2>
+      <p>Fayha Fresh provides high-quality juices made from fresh ingredients. Our mission is to deliver healthy, delicious, and refreshing drinks that customers can trust every day.</p>
+      <div class="badges">
+        <span>100% Natural</span>
+        <span>Made in Oman</span>
+        <span>Fresh Daily</span>
+      </div>
+      <button class="btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact Us</button>
+    </div>
+  </section>
+
+  <section class="products" id="products">
+    <p class="small-title">OUR PRODUCT</p>
+    <h2>Fayha Fresh Juices</h2>
+    <div class="grid">
+      <div class="card">
+        <img src="imge/orang.png" class="product-img" alt="Orange Juice" onerror="this.src='https://placehold.co/130x210?text=🍊'">
+        <h3>Orange</h3>
+        <p>250 ML / 1 LT</p>
+        <p class="price">2.500 OMR</p>
+        <button onclick="addToCart(1, 'Orange', 2.500, 'imge/orang.png')">Add to Cart</button>
+        <button class="details-btn" onclick="showDetails('Orange', '2.500', '🍊', 'Fresh squeezed orange juice rich in Vitamin C. Made from premium oranges, no added sugar, 100% natural.')">Details</button>
+      </div>
+      <div class="card">
+        <img src="imge/lemon.png" class="product-img" alt="Lemon Juice" onerror="this.src='https://placehold.co/130x210?text=🍋'">
+        <h3>Lemon</h3>
+        <p>250 ML / 1 LT</p>
+        <p class="price">2.000 OMR</p>
+        <button onclick="addToCart(2, 'Lemon', 2.000, 'imge/lemon.png')">Add to Cart</button>
+        <button class="details-btn" onclick="showDetails('Lemon', '2.000', '🍋', 'Refreshing lemon juice, perfect for detox and hydration. Packed with Vitamin C and antioxidants.')">Details</button>
+      </div>
+      <div class="card">
+        <img src="imge/mango.png" class="product-img" alt="Mango Juice" onerror="this.src='https://placehold.co/130x210?text=🥭'">
+        <h3>Mango</h3>
+        <p>250 ML / 1 LT</p>
+        <p class="price">3.000 OMR</p>
+        <button onclick="addToCart(3, 'Mango', 3.000, 'imge/mango.png')">Add to Cart</button>
+        <button class="details-btn" onclick="showDetails('Mango', '3.000', '🥭', 'Sweet and creamy mango juice made from the finest Alphonso mangoes. A taste of paradise!')">Details</button>
+      </div>
+      <div class="card">
+        <img src="imge/watermelon.png" class="product-img" alt="Watermelon Juice" onerror="this.src='https://placehold.co/130x210?text=🍉'">
+        <h3>Watermelon</h3>
+        <p>250 ML / 1 LT</p>
+        <p class="price">2.500 OMR</p>
+        <button onclick="addToCart(4, 'Watermelon', 2.500, 'imge/watermelon.png')">Add to Cart</button>
+        <button class="details-btn" onclick="showDetails('Watermelon', '2.500', '🍉', 'Hydrating watermelon juice, perfect for hot Omani days. Refreshing and naturally sweet.')">Details</button>
+      </div>
+      <div class="card">
+        <img src="imge/pomeg.png" class="product-img" alt="Pomegranate Juice" onerror="this.src='https://placehold.co/130x210?text=🍎'">
+        <h3>Pomegranate</h3>
+        <p>250 ML / 1 LT</p>
+        <p class="price">3.500 OMR</p>
+        <button onclick="addToCart(5, 'Pomegranate', 3.500, 'imge/pomeg.png')">Add to Cart</button>
+        <button class="details-btn" onclick="showDetails('Pomegranate', '3.500', '🍎', 'Antioxidant-rich pomegranate juice. Supports heart health and immunity.')">Details</button>
+      </div>
+      <div class="card">
+        <img src="imge/pina.png" class="product-img" alt="Pineapple Juice" onerror="this.src='https://placehold.co/130x210?text=🍍'">
+        <h3>Pineapple</h3>
+        <p>250 ML / 1 LT</p>
+        <p class="price">3.000 OMR</p>
+        <button onclick="addToCart(6, 'Pineapple', 3.000, 'imge/pina.png')">Add to Cart</button>
+        <button class="details-btn" onclick="showDetails('Pineapple', '3.000', '🍍', 'Tropical pineapple juice with digestive enzymes. Sweet, tangy, and delicious.')">Details</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cart Section -->
+  <div id="cartSection" class="cart-section">
+    <div class="cart-container">
+      <span class="close-cart" onclick="toggleCart()">&times;</span>
+      <h2>🛒 Your Shopping Cart</h2>
+      <div id="cartItemsList"></div>
+      <div class="cart-summary">
+        <p>Total Items: <strong id="totalItems">0</strong></p>
+        <p>Total Price: <strong id="totalPrice">0.000</strong> OMR</p>
+        <button class="btn" onclick="showCheckout()">Proceed to Checkout 🛍️</button>
+        <button class="btn" onclick="clearCart()" style="background:#777;">Clear Cart</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product Details Modal -->
+  <div id="productModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeModal()">&times;</span>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <!-- Checkout Modal - باستخدام FormSubmit -->
+  <div id="checkoutModal" class="checkout-modal">
+    <div class="checkout-content">
+      <span class="close-modal" onclick="closeCheckoutModal()">&times;</span>
+      <h3>📋 Complete Your Order</h3>
+      <form id="checkoutForm" action="https://formsubmit.co/2210231@gulfcollege.edu.om" method="POST">
+        <!-- إخفاء الصفحة بعد الإرسال والعودة إلى الموقع -->
+        <input type="hidden" name="_next" value="https://fayhafresh.com/thankyou.html">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_subject" value="🆕 NEW ORDER from Fayha Fresh Website!">
+        
+        <input type="text" name="Full Name" id="customerName" placeholder="Full Name *" required>
+        <input type="tel" name="Phone Number" id="customerPhone" placeholder="Phone Number *" required>
+        <input type="text" name="Delivery Location" id="deliveryLocation" placeholder="Delivery Location *" required>
+        
+        <label style="font-weight: bold; display: block; margin-bottom: 10px;">Payment Method:</label>
+        <div class="payment-options">
+          <label>
+            <input type="radio" name="Payment Method" value="Cash on Delivery" checked> 💵 Cash on Delivery
+          </label>
+          <label>
+            <input type="radio" name="Payment Method" value="Card Payment"> 💳 Card Payment
+          </label>
+          <label>
+            <input type="radio" name="Payment Method" value="Bank Transfer"> 🏦 Bank Transfer
+          </label>
+        </div>
+        
+        <!-- حقل مخفي لتخزين تفاصيل الطلب -->
+        <input type="hidden" name="Order Details" id="orderDetailsInput">
+        <input type="hidden" name="Total Price" id="totalPriceInput">
+        
+        <button type="submit" class="btn" style="width:100%; margin-top:10px;" onclick="prepareOrderData()">✅ Confirm Order</button>
+      </form>
+      <div id="checkoutMessage" class="form-message"></div>
+    </div>
+  </div>
+
+  <section class="story" id="story">
+    <div>
+      <p class="small-title">STORY</p>
+      <h2>Story of Our Juice</h2>
+      <p>In the sun-drenched landscapes of Oman, fresh juice has become a symbol of wellness and refreshment. Fayha Fresh offers delicious natural juices that combine freshness, taste, and healthy ingredients.</p>
+    </div>
+    <img src="imge/homepage.png" alt="Juice Story" onerror="this.src='https://placehold.co/400x300?text=Our+Story'">
+  </section>
+
+  <section class="benefits">
+    <p class="small-title">BENEFITS</p>
+    <h2>The Benefits of Fresh Juices</h2>
+    <div class="benefit-grid">
+      <div class="benefit">🍊<h3>Digestive Health</h3></div>
+      <div class="benefit">🛡️<h3>Immune Support</h3></div>
+      <div class="benefit">⚡<h3>Energy Boost</h3></div>
+      <div class="benefit">🥥<h3>Antioxidant Power</h3></div>
+    </div>
+  </section>
+
+  <!-- Contact Form - باستخدام FormSubmit -->
+  <section class="contact" id="contact">
+    <div class="contact-box">
+      <h2>Contact Information</h2>
+      <p>📍 Muscat, Sultanate of Oman</p>
+      <p>📞 +968 99253017</p>
+      <p>📧 hello@fayhafresh.com</p>
+      <p>🕒 8:00 AM - 10:00 PM</p>
+    </div>
+    <div class="contact-box">
+      <h2>Send Message</h2>
+      <form action="https://formsubmit.co/2210231@gulfcollege.edu.om" method="POST">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_subject" value="📧 New Contact Message from Fayha Fresh">
+        <input type="text" name="Name" placeholder="Your Name" required>
+        <input type="email" name="Email" placeholder="Your Email" required>
+        <input type="tel" name="Phone" placeholder="Phone Number">
+        <textarea name="Message" rows="5" placeholder="Your Message" required></textarea>
+        <button type="submit" class="btn">Send Message ✉️</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Fayha Fresh | Fresh Juice Oman</p>
+  </footer>
+
+  <script>
+    let cart = JSON.parse(localStorage.getItem('fayhaCart')) || [];
+
+    function showNotification(msg, isError = false) {
+      let div = document.createElement('div');
+      div.className = 'notification';
+      div.style.background = isError ? '#e74c3c' : '#27ae60';
+      div.textContent = msg;
+      document.body.appendChild(div);
+      setTimeout(() => div.remove(), 3000);
+    }
+
+    function updateCartCount() {
+      let total = cart.reduce((s, i) => s + i.quantity, 0);
+      let span = document.getElementById('cartCount');
+      if (span) span.textContent = total;
+    }
+
+    function saveCart() {
+      localStorage.setItem('fayhaCart', JSON.stringify(cart));
+      updateCartCount();
+    }
+
+    function addToCart(id, name, price, img) {
+      let existing = cart.find(i => i.id === id);
+      if (existing) existing.quantity++;
+      else cart.push({ id, name, price: parseFloat(price), img, quantity: 1 });
+      saveCart();
+      renderCart();
+      showNotification(`✓ ${name} juice added to cart!`);
+    }
+
+    function renderCart() {
+      let container = document.getElementById('cartItemsList');
+      let totalSpan = document.getElementById('totalItems');
+      let priceSpan = document.getElementById('totalPrice');
+      if (!container) return;
+      if (cart.length === 0) {
+        container.innerHTML = '<div style="text-align:center;padding:40px;">🛒 Your cart is empty.</div>';
+        if (totalSpan) totalSpan.textContent = '0';
+        if (priceSpan) priceSpan.textContent = '0.000';
+        return;
+      }
+      container.innerHTML = cart.map(item => `
+        <div class="cart-item">
+          <div class="cart-item-info">
+            <img src="${item.img}" class="cart-item-img" onerror="this.src='https://placehold.co/50x50'">
+            <div><strong>${item.name}</strong><br>${item.price} OMR</div>
+          </div>
+          <div class="cart-item-actions">
+            <button onclick="changeQty(${item.id}, -1)">-</button>
+            <span>${item.quantity}</span>
+            <button onclick="changeQty(${item.id}, 1)">+</button>
+            <button onclick="removeItem(${item.id})" class="remove-btn">🗑️</button>
+          </div>
+          <div><strong>${(item.price * item.quantity).toFixed(3)} OMR</strong></div>
+        </div>
+      `).join('');
+      let total = cart.reduce((s, i) => s + i.quantity, 0);
+      let totalPrice = cart.reduce((s, i) => s + (i.price * i.quantity), 0);
+      if (totalSpan) totalSpan.textContent = total;
+      if (priceSpan) priceSpan.textContent = totalPrice.toFixed(3);
+    }
+
+    function changeQty(id, delta) {
+      let item = cart.find(i => i.id === id);
+      if (item) {
+        if (item.quantity + delta > 0) item.quantity += delta;
+        else cart = cart.filter(i => i.id !== id);
+        saveCart();
+        renderCart();
+      }
+    }
+
+    function removeItem(id) {
+      cart = cart.filter(i => i.id !== id);
+      saveCart();
+      renderCart();
+      showNotification('Item removed');
+    }
+
+    function clearCart() {
+      if (confirm('Clear cart?')) {
+        cart = [];
+        saveCart();
+        renderCart();
+        showNotification('Cart cleared');
+      }
+    }
+
+    function toggleCart() {
+      let section = document.getElementById('cartSection');
+      section.classList.toggle('show');
+      renderCart();
+    }
+
+    function showDetails(name, price, icon, desc) {
+      let modal = document.getElementById('productModal');
+      let content = document.getElementById('modalContent');
+      content.innerHTML = `
+        <div style="font-size:80px;">${icon}</div>
+        <h2>${name} Juice</h2>
+        <p style="font-size:24px;color:#e8752c;">${price} OMR</p>
+        <p style="margin:15px 0;">${desc}</p>
+        <p>✅ 100% Natural | ✅ No Preservatives</p>
+        <button class="btn" onclick="closeModal()">Close</button>
+      `;
+      modal.classList.add('show');
+    }
+
+    function closeModal() {
+      document.getElementById('productModal').classList.remove('show');
+    }
+
+    function showCheckout() {
+      if (cart.length === 0) {
+        showNotification('Cart is empty!', true);
+        return;
+      }
+      document.getElementById('checkoutModal').classList.add('show');
+    }
+
+    function closeCheckoutModal() {
+      document.getElementById('checkoutModal').classList.remove('show');
+    }
+
+    // تجهيز بيانات الطلب قبل الإرسال
+    function prepareOrderData() {
+      let orderDetails = cart.map(item => 
+        `${item.name}: ${item.quantity} x ${item.price} OMR = ${(item.price * item.quantity).toFixed(3)} OMR`
+      ).join(' | ');
+      
+      let totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(3);
+      
+      document.getElementById('orderDetailsInput').value = orderDetails;
+      document.getElementById('totalPriceInput').value = totalPrice + ' OMR';
+      
+      // تفريغ السلة بعد الإرسال
+      setTimeout(() => {
+        cart = [];
+        saveCart();
+        renderCart();
+        closeCheckoutModal();
+        toggleCart();
+      }, 500);
+      
+      return true;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      updateCartCount();
+      renderCart();
+    });
+  </script>
+
+</body>
+</html>
