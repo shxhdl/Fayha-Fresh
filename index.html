@@ -527,6 +527,39 @@
       margin: 10px 0;
     }
 
+    /* Video and 3D Video Sections */
+    .video-section {
+      padding: 70px 8%;
+      background: #fffaf0;
+      text-align: center;
+    }
+
+    .video-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 20px 35px rgba(0,0,0,0.15);
+      background: #000;
+      transition: transform 0.3s ease;
+    }
+
+    .video-container video {
+      width: 100%;
+      display: block;
+      vertical-align: middle;
+      max-height: 75vh;
+      object-fit: cover;
+    }
+
+    .video-caption {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: 600;
+      color: #5b3b75;
+      letter-spacing: 1px;
+    }
+
     .story {
       padding: 80px 8%;
       display: grid;
@@ -682,6 +715,92 @@
         text-align: center;
         gap: 10px;
       }
+
+      .video-container video {
+        max-height: 50vh;
+      }
+    }
+
+    /* Poster Overlay Styles */
+    .poster-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.85);
+      z-index: 10000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(5px);
+      transition: all 0.3s ease;
+    }
+
+    .poster-container {
+      position: relative;
+      max-width: 90%;
+      max-height: 90%;
+      text-align: center;
+      animation: posterFadeIn 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+
+    @keyframes posterFadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.92);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .poster-image {
+      max-width: 100%;
+      max-height: 85vh;
+      width: auto;
+      height: auto;
+      border-radius: 20px;
+      box-shadow: 0 25px 45px rgba(0,0,0,0.4);
+      border: 3px solid #fff;
+      object-fit: contain;
+    }
+
+    .close-poster {
+      position: absolute;
+      top: -15px;
+      right: -15px;
+      background: #e8752c;
+      color: white;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      border: 2px solid white;
+      z-index: 10001;
+    }
+
+    .close-poster:hover {
+      background: #e74c3c;
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 650px) {
+      .close-poster {
+        top: -10px;
+        right: -10px;
+        width: 36px;
+        height: 36px;
+        font-size: 24px;
+      }
     }
   </style>
 </head>
@@ -699,8 +818,10 @@
     </div>
     <nav>
       <a href="#home">HOME</a>
-      <a href="#about">ABOUT US</a>
       <a href="#products">PRODUCTS</a>
+      <a href="#videoSection">VIDEO</a>
+      <a href="#section3d">3D VIDEO</a>
+      <a href="#about">ABOUT US</a>
       <a href="#story">STORY</a>
       <a href="#contact">CONTACT US</a>
       <a href="#" onclick="toggleCart(); return false;" class="cart-btn">🛒 CART (<span id="cartCount">0</span>)</a>
@@ -719,76 +840,85 @@
     </div>
   </section>
 
-  <section class="about" id="about">
-    <div class="about-img">
-      <img src="imge/homepage.png" alt="About Juice" onerror="this.src='https://placehold.co/400x400?text=Fayha+Fresh'">
-    </div>
-    <div class="about-text">
-      <p class="small-title">WHO WE ARE</p>
-      <h2>Meet the Experts Behind Oman's Fresh Juice Brand</h2>
-      <p>Fayha Fresh provides high-quality juices made from fresh ingredients. Our mission is to deliver healthy, delicious, and refreshing drinks that customers can trust every day.</p>
-      <div class="badges">
-        <span>100% Natural</span>
-        <span>Made in Oman</span>
-        <span>Fresh Daily</span>
-      </div>
-      <button class="btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact Us</button>
-    </div>
-  </section>
-
   <section class="products" id="products">
     <p class="small-title">OUR PRODUCT</p>
     <h2>Fayha Fresh Juices</h2>
     <div class="grid">
       <div class="card">
-        <img src="imge/orang.png" class="product-img" alt="Orange Juice" onerror="this.src='https://placehold.co/130x210?text=🍊'">
+        <img src="imge/orang1.png" class="product-img" alt="Orange Juice" onerror="this.src='https://placehold.co/130x210?text=🍊'">
         <h3>Orange</h3>
         <p>250 ML / 1 LT</p>
         <p class="price">2.500 OMR</p>
-        <button onclick="addToCart(1, 'Orange', 2.500, 'imge/orang.png')">Add to Cart</button>
+        <button onclick="addToCart(1, 'Orange', 2.500, 'imge/orang1.png')">Add to Cart</button>
         <button class="details-btn" onclick="showDetails('Orange', '2.500', '🍊', 'Fresh squeezed orange juice rich in Vitamin C. Made from premium oranges, no added sugar, 100% natural.')">Details</button>
       </div>
       <div class="card">
-        <img src="imge/lemon.png" class="product-img" alt="Lemon Juice" onerror="this.src='https://placehold.co/130x210?text=🍋'">
+        <img src="imge/lemon1.png" class="product-img" alt="Lemon Juice" onerror="this.src='https://placehold.co/130x210?text=🍋'">
         <h3>Lemon</h3>
         <p>250 ML / 1 LT</p>
         <p class="price">2.000 OMR</p>
-        <button onclick="addToCart(2, 'Lemon', 2.000, 'imge/lemon.png')">Add to Cart</button>
+        <button onclick="addToCart(2, 'Lemon', 2.000, 'imge/lemon1.png')">Add to Cart</button>
         <button class="details-btn" onclick="showDetails('Lemon', '2.000', '🍋', 'Refreshing lemon juice, perfect for detox and hydration. Packed with Vitamin C and antioxidants.')">Details</button>
       </div>
       <div class="card">
-        <img src="imge/mango.png" class="product-img" alt="Mango Juice" onerror="this.src='https://placehold.co/130x210?text=🥭'">
+        <img src="imge/mango1.png" class="product-img" alt="Mango Juice" onerror="this.src='https://placehold.co/130x210?text=🥭'">
         <h3>Mango</h3>
         <p>250 ML / 1 LT</p>
         <p class="price">3.000 OMR</p>
-        <button onclick="addToCart(3, 'Mango', 3.000, 'imge/mango.png')">Add to Cart</button>
+        <button onclick="addToCart(3, 'Mango', 3.000, 'imge/mango1.png')">Add to Cart</button>
         <button class="details-btn" onclick="showDetails('Mango', '3.000', '🥭', 'Sweet and creamy mango juice made from the finest Alphonso mangoes. A taste of paradise!')">Details</button>
       </div>
       <div class="card">
-        <img src="imge/watermelon.png" class="product-img" alt="Watermelon Juice" onerror="this.src='https://placehold.co/130x210?text=🍉'">
+        <img src="imge/watermelon1.png" class="product-img" alt="Watermelon Juice" onerror="this.src='https://placehold.co/130x210?text=🍉'">
         <h3>Watermelon</h3>
         <p>250 ML / 1 LT</p>
         <p class="price">2.500 OMR</p>
-        <button onclick="addToCart(4, 'Watermelon', 2.500, 'imge/watermelon.png')">Add to Cart</button>
+        <button onclick="addToCart(4, 'Watermelon', 2.500, 'imge/watermelon1.png')">Add to Cart</button>
         <button class="details-btn" onclick="showDetails('Watermelon', '2.500', '🍉', 'Hydrating watermelon juice, perfect for hot Omani days. Refreshing and naturally sweet.')">Details</button>
       </div>
       <div class="card">
-        <img src="imge/pomeg.png" class="product-img" alt="Pomegranate Juice" onerror="this.src='https://placehold.co/130x210?text=🍎'">
+        <img src="imge/pomeg1.png" class="product-img" alt="Pomegranate Juice" onerror="this.src='https://placehold.co/130x210?text=🍎'">
         <h3>Pomegranate</h3>
         <p>250 ML / 1 LT</p>
         <p class="price">3.500 OMR</p>
-        <button onclick="addToCart(5, 'Pomegranate', 3.500, 'imge/pomeg.png')">Add to Cart</button>
+        <button onclick="addToCart(5, 'Pomegranate', 3.500, 'imge/pomeg1.png')">Add to Cart</button>
         <button class="details-btn" onclick="showDetails('Pomegranate', '3.500', '🍎', 'Antioxidant-rich pomegranate juice. Supports heart health and immunity.')">Details</button>
       </div>
       <div class="card">
-        <img src="imge/pina.png" class="product-img" alt="Pineapple Juice" onerror="this.src='https://placehold.co/130x210?text=🍍'">
+        <img src="imge/pina1.png" class="product-img" alt="Pineapple Juice" onerror="this.src='https://placehold.co/130x210?text=🍍'">
         <h3>Pineapple</h3>
         <p>250 ML / 1 LT</p>
         <p class="price">3.000 OMR</p>
-        <button onclick="addToCart(6, 'Pineapple', 3.000, 'imge/pina.png')">Add to Cart</button>
+        <button onclick="addToCart(6, 'Pineapple', 3.000, 'imge/pina1.png')">Add to Cart</button>
         <button class="details-btn" onclick="showDetails('Pineapple', '3.000', '🍍', 'Tropical pineapple juice with digestive enzymes. Sweet, tangy, and delicious.')">Details</button>
       </div>
     </div>
+  </section>
+
+  <!-- Video Section 1: video.mp4 -->
+  <section class="video-section" id="videoSection">
+    <p class="small-title">WATCH US IN ACTION</p>
+    <h2 style="margin-bottom: 30px;">Fresh Juices – Pure Goodness</h2>
+    <div class="video-container">
+      <video controls autoplay muted loop playsinline>
+        <source src="video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    <div class="video-caption">✨ Taste the freshness of nature ✨</div>
+  </section>
+
+  <!-- Video Section 2: 3d video.mp4 (3D Video) -->
+  <section class="video-section" id="section3d" style="background: #f5efe8;">
+    <p class="small-title">IMMERSIVE 3D EXPERIENCE</p>
+    <h2 style="margin-bottom: 30px;">3D Visual Journey</h2>
+    <div class="video-container">
+      <video controls autoplay muted loop playsinline>
+        <source src="3d%20video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    <div class="video-caption">🎬 A new dimension of refreshment 🎬</div>
   </section>
 
   <!-- Cart Section -->
@@ -820,7 +950,6 @@
       <span class="close-modal" onclick="closeCheckoutModal()">&times;</span>
       <h3>📋 Complete Your Order</h3>
       <form id="checkoutForm" action="https://formsubmit.co/2210231@gulfcollege.edu.om" method="POST">
-        <!-- إخفاء الصفحة بعد الإرسال والعودة إلى الموقع -->
         <input type="hidden" name="_next" value="https://fayhafresh.com/thankyou.html">
         <input type="hidden" name="_captcha" value="false">
         <input type="hidden" name="_subject" value="🆕 NEW ORDER from Fayha Fresh Website!">
@@ -842,7 +971,6 @@
           </label>
         </div>
         
-        <!-- حقل مخفي لتخزين تفاصيل الطلب -->
         <input type="hidden" name="Order Details" id="orderDetailsInput">
         <input type="hidden" name="Total Price" id="totalPriceInput">
         
@@ -851,6 +979,23 @@
       <div id="checkoutMessage" class="form-message"></div>
     </div>
   </div>
+
+  <section class="about" id="about">
+    <div class="about-img">
+      <img src="imge/homepage.png" alt="About Juice" onerror="this.src='https://placehold.co/400x400?text=Fayha+Fresh'">
+    </div>
+    <div class="about-text">
+      <p class="small-title">WHO WE ARE</p>
+      <h2>Meet the Experts Behind Oman's Fresh Juice Brand</h2>
+      <p>Fayha Fresh provides high-quality juices made from fresh ingredients. Our mission is to deliver healthy, delicious, and refreshing drinks that customers can trust every day.</p>
+      <div class="badges">
+        <span>100% Natural</span>
+        <span>Made in Oman</span>
+        <span>Fresh Daily</span>
+      </div>
+      <button class="btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact Us</button>
+    </div>
+  </section>
 
   <section class="story" id="story">
     <div>
@@ -1025,7 +1170,6 @@
       document.getElementById('checkoutModal').classList.remove('show');
     }
 
-    // تجهيز بيانات الطلب قبل الإرسال
     function prepareOrderData() {
       let orderDetails = cart.map(item => 
         `${item.name}: ${item.quantity} x ${item.price} OMR = ${(item.price * item.quantity).toFixed(3)} OMR`
@@ -1036,7 +1180,6 @@
       document.getElementById('orderDetailsInput').value = orderDetails;
       document.getElementById('totalPriceInput').value = totalPrice + ' OMR';
       
-      // تفريغ السلة بعد الإرسال
       setTimeout(() => {
         cart = [];
         saveCart();
@@ -1051,6 +1194,63 @@
     document.addEventListener('DOMContentLoaded', () => {
       updateCartCount();
       renderCart();
+      
+      if (!sessionStorage.getItem('posterClosed')) {
+        const posterDiv = document.createElement('div');
+        posterDiv.className = 'poster-overlay';
+        posterDiv.id = 'posterOverlay';
+        
+        const posterContainer = document.createElement('div');
+        posterContainer.className = 'poster-container';
+        
+        const closeBtn = document.createElement('div');
+        closeBtn.className = 'close-poster';
+        closeBtn.innerHTML = '✕';
+        closeBtn.setAttribute('aria-label', 'Close poster');
+        
+        const posterImg = document.createElement('img');
+        posterImg.className = 'poster-image';
+        posterImg.src = 'poster.png';
+        posterImg.alt = 'Fayha Fresh Promotional Poster';
+        posterImg.onerror = function() {
+          this.style.minWidth = '280px';
+          this.style.minHeight = '180px';
+          this.style.backgroundColor = '#f5e6d3';
+          this.style.objectFit = 'contain';
+          this.style.padding = '20px';
+        };
+        
+        posterContainer.appendChild(closeBtn);
+        posterContainer.appendChild(posterImg);
+        posterDiv.appendChild(posterContainer);
+        document.body.appendChild(posterDiv);
+        
+        document.body.style.overflow = 'hidden';
+        
+        function closePoster() {
+          const overlay = document.getElementById('posterOverlay');
+          if (overlay) {
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+              overlay.remove();
+              document.body.style.overflow = '';
+            }, 300);
+          }
+          sessionStorage.setItem('posterClosed', 'true');
+        }
+        
+        closeBtn.addEventListener('click', closePoster);
+        posterDiv.addEventListener('click', (e) => {
+          if (e.target === posterDiv) closePoster();
+        });
+        const escHandler = (e) => {
+          if (e.key === 'Escape') {
+            closePoster();
+            document.removeEventListener('keydown', escHandler);
+          }
+        };
+        document.addEventListener('keydown', escHandler);
+      }
     });
   </script>
 
